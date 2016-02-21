@@ -1,0 +1,8 @@
+bin/
+run.py
+config.py
+db_create.py
+app.db
+*.pyc
+*.swp
+*.log
