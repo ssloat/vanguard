@@ -11,6 +11,7 @@ class Fund(db.Model):
     asset_class = db.Column(db.String(64), nullable=False)
     exp_ratio = db.Column(db.Float, nullable=False)
     category = db.Column(db.String(64), nullable=True)
+    minimum = db.Column(db.Integer, nullable=True)
 
     def __init__(self, id, fund_type, name, ticker, asset_class, exp_ratio, category=None):
         self.id = id
@@ -20,6 +21,21 @@ class Fund(db.Model):
         self.asset_class = asset_class
         self.exp_ratio = exp_ratio
         self.category = category
+
+    @property
+    def overview_url(self):
+        return "https://personal.vanguard.com/us/funds/snapshot?FundIntExt=INT&FundId=%04d#tab=0" % self.id
+
+    @property
+    def dividend_url(self):
+        return "https://personal.vanguard.com/us/funds/snapshot?FundIntExt=INT&FundId=%04d#tab=4" % self.id
+
+    def lookup_overview(self, driver):
+        trs = driver.find_elements_by_xpath('//*[@id="fundFactsTable"]/tbody/tr')
+        self.category = trs[1].find_elements_by_xpath('td')[1].get_attribute('innerHTML')
+        self.minimum = float(
+            trs[3].find_elements_by_xpath('td')[1].get_attribute('innerHTML')[1:].replace(',', '')
+        )
 
 class FundPrice(db.Model):
     __tablename__ = "fund_prices"

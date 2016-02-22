@@ -31,9 +31,11 @@ if __name__ == '__main__':
             fund_name = span.get_attribute('innerHTML')
             fund_id = int(re.match(r'.*FundId=(\d+)', a.get_attribute('href')).group(1))
 
-            db.session.add( 
-                models.Fund(fund_id, 'Mutual Fund', fund_name, ticker, asset_class, exp_ratio) 
-            )
+            fund = models.Fund(fund_id, 'Mutual Fund', fund_name, ticker, asset_class, exp_ratio) 
+            driver.get(fund.overview_url)
+            fund.lookup_overview(driver)
+
+            db.session.add(fund)
 
     finally:
         if driver:
