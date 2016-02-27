@@ -1,0 +1,184 @@
+
+.Calendar {	display: inline-block; background-color: #FFFFFF; }
+.Calendar .calTop { color: #8D4900; padding: 0; background-color: #EAE5DA; height: 25px; position: relative; }
+.Calendar .month th { border: none !important; padding: 0 !important; margin: 0; }
+.Calendar .cdays td a,
+.Calendar .cdays td a:visited { font-size: 12px; font-family: Arial, sans-serif; color: #8D4900; border-bottom: none;}
+.Calendar .cdays td a.nvo:hover { color: #96151D; text-decoration: underline; }
+.Calendar .cdays td.special a.nvo:hover,
+.Calendar tr.cdays td.selected a.nvo:hover { color: #FFF; text-decoration: none; }
+.Calendar .cdays td.event a.nvo:hover,
+.Calendar .cdays td.exchange a.nvo:hover { color: #965E23; }
+.Calendar .cdays td { text-align:center; vertical-align: middle; font-family: Arial, sans-serif; font-size: 12px; padding-top: 6px; border: none; height: auto; }
+.Calendar .cdays td a { height: 14px; width: 14px; display: inline-block; padding: 0; border-bottom: none;}
+.Calendar .cdays a.vo { cursor: default; color:black; }
+.Calendar .cdays a.vo:hover { cursor: default; }
+.Calendar .cdays .blocked { background-color: #FFFFFF; color: #B3B3B3; cursor: default; }
+.Calendar .cdays .today { background-color: #FFFFFF; background-image: none; }
+.Calendar .cdays .today a { font-weight: bold; }
+.Calendar .calBig tr.cdays .selected a,
+.Calendar .calSmall tr.cdays .selected a { padding: 0; background-color: #96151D; color: #FFFFFF; cursor: default; }
+.Calendar .cdays .selected { background-image: none !important; background-color: #FFFFFF !important; }
+.Calendar .cdays .special a { color: #8D4900; background-color: #EAE5DA; width: 14px; height: 14px;}
+.Calendar .cdays .credit a { background-color: #69923A; }
+.Calendar .cdays .debit a { background-color: #0098DB; }
+.Calendar .cdays .skip a { background-color: #E37222; }
+.Calendar .calBig tr.cdays td.credit a,
+.Calendar .calBig tr.cdays td.debit a,
+.Calendar .calBig tr.cdays td.skip a { color: #FFFFFF; }
+.Calendar .cdays .exchange a { background-color: #E0DBD0;  }
+.Calendar .days th { background-color: #FFFFFF; border-bottom: 1px solid #D9D9D9 !important; color:#333333; font-size: 12px; font-weight:bold; text-align:center; line-height: 12px; padding: 15px 0 9px; margin: 0px 0px 5px 0px; cursor: default; }
+.Calendar .leftArrow img, .Calendar .rightArrow img { display:block; }
+.Calendar .calTop .dateOutput { cursor: default; }
+.Calendar .calTop .leftArrow,
+.Calendar .calTop .rightArrow { cursor: pointer; }
+.Calendar .calBig {	padding: 6px 6px 15px 6px; border: 1px solid #D9D9D9; }
+.Calendar .calBig .calTop { width: 196px; }
+.Calendar .calBig .calTop .dateOutput { position: absolute; left: 37px; top: 6px; width: 122px; text-align: center; color: #96151D; font-size: 12px; }
+.Calendar .calBig .calTop .dateSelectors { position: absolute; left: 18px; text-align: center; }
+.Calendar .calBig .calTop .leftArrow, .Calendar .calBig .calTop .rightArrow { font-size: 12px; position: absolute; top: 6px; display: block; border: 0; }
+.Calendar .calBig .calTop .leftArrow { left: 6px; }
+.Calendar .calBig .calTop .rightArrow { right: 6px; }
+.Calendar .calBig .calTop .vg-SelOneMenuTable { position: relative; top:2px;}
+.Calendar .calBig .calTop .vg-SelOneMenuText { background-color: #EAE5DA !important; border-width: 1px 0px 1px 1px !important; border-style: solid !important; border-color: #EAE5DA !important; border-top-color: transparent !important; padding: 0 0 0px 9px !important; overflow: hidden;}
+.Calendar .calBig .calTop .vg-SelOneMenuIconCell { background-position: center !important; _background-position: 50% 1px; background-color: #EAE5DA !important; background-image: url(../images/ng/cbd/calendar/drop_down_icon_alt.png); border-width: 1px 1px 1px 0px !important; border-color: transparent !important;}
+.Calendar .calBig .calTop .vg-SelOneMenuDropDownwards,
+.Calendar .calBig .calTop .vg-SelOneMenuDropUpwards { height: 28px;  top: -2px !important; _top: -1px !important; }
+.Calendar .calBig .calTop .vg-SelOneMenuDropDownOnTop { background-position: 50% 11px; border-color: #D9D9D9 #D9D9D9 white #D9D9D9 !important;}
+.Calendar .calBig .calTop .vg-SelOneMenuDropDownAtBottom { background-position: 50% 12px; border-color: white #D9D9D9 #D9D9D9 #D9D9D9 !important; }
+.Calendar .calBig .calTop .vg-SelOneMenuDropDownOnTop,
+.Calendar .calBig .calTop .vg-SelOneMenuDropDownAtBottom { height: 28px; background-color: #FFF !important; }
+@-moz-document url-prefix() {
+.Calendar .calBig .calTop .vg-SelOneMenuDropDownOnTop,
+.Calendar .calBig .calTop .vg-SelOneMenuDropDownAtBottom { height: 29px; }
+}
+.Calendar .calBig .calTop .vg-SelOneMenuIconCellOpenTop,
+.Calendar .calBig .calTop .vg-SelOneMenuIconCellOpenBottom { background-image: url(../images/ng/cbd/calendar/drop_down_icon_alt.png); background-position: center center !important; border-width: 1px 1px 1px 0 !important; }
+.Calendar .calBig .calTop .vg-SelOneMenuHover .vg-SelOneMenuIconCell, .Calendar .calBig .calTop .vg-SelOneMenuHover .vg-SelOneMenuIconCellOpenTop,
+.Calendar .calBig .calTop .vg-SelOneMenuHover .vg-SelOneMenuIconCellOpenBottom  { background-image: url(../images/ng/cbd/calendar/drop_down_icon_alt_hover.png) ; }
+.Calendar .calBig .calTop .vg-SelOneMenuHover .vg-SelOneMenuInput { text-decoration: underline; color: #96151D; }
+.Calendar .calBig .calTop .vg-SelOneMenuInput { color: #8D4900; font-size: 12px; }
+.Calendar .calBig .calTop .calSelectMonth .vg-SelOneMenuTextSelected { width: 62px; }
+.Calendar .calBig .calTop .calSelectMonth .vg-SelOneMenuHiddenRow .vg-SelOneMenuInput { padding-right: 6px !important; }
+.Calendar .calBig .calTop .calSelectMonth .vg-SelOneMenuText { width: 74px; _width: 64px;}
+@-moz-document url-prefix() { .Calendar .calBig .calTop .calSelectMonth .vg-SelOneMenuText { width: 64px;}}
+.Calendar .calBig .calTop .calSelectYear .vg-SelOneMenuHiddenRow .vg-SelOneMenuInput { padding-right: 12px !important; }
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+.Calendar .calBig .calTop .vg-SelOneMenuDropDownOnTop { background-position: 3px 12px;  }
+.Calendar .calBig .calTop .vg-SelOneMenuDropDownAtBottom { background-position: 3px 13px;}
+ZZZ.Calendar .calBig .calTop .calSelectMonth .vg-SelOneMenuText { width: 74px; }
+}
+.Calendar .calSmall { padding:3px; _padding:3px 2px; border: 1px solid #D9D9D9; }
+.Calendar .calSmall .calTop { width: 138px; }
+.Calendar .calSmall .calTop .dateOutput { font-size: 12px; color: #96151D; font-family: Arial, sans-serif; width: 96px; text-align: center; position: absolute; left:18px; top:4px; background-color: #EAE5DA;}
+.Calendar .calSmall .calTop .leftArrow, .Calendar .calSmall .calTop .rightArrow { font-size: 12px; position: absolute; top: 6px; display: block; border: 0; }
+.Calendar .calSmall .calTop .leftArrow { left: 6px; }
+.Calendar .calSmall .calTop .rightArrow { right: 6px; }
+.Calendar .dualBig { width: 424px; border: 1px solid #D9D9D9; background-color: #FFFFFF; }
+.Calendar .dualBig .calBig { border: none; padding: 0; margin: 6px; }
+.Calendar .dualBig .calBig table { display: inline-block; #float: left; }
+.Calendar .dualBig .calBig .calTop { height: 45px; }
+.Calendar .dualBig .calBig .calTop .calTitle { font-size: 16px; color: #96151D; text-align: center; width: 150px; position: absolute; top: 6px; left: 23px;}
+.Calendar .dualBig .calBig .calTop .dateSelectors { top: 20px; }
+.Calendar .dualBig .calBig .calTop .leftArrow, .Calendar .dualBig .calBig .calTop .rightArrow { top: 26px; }
+.Calendar .dualBig .calButtons { margin: 0 6px 6px 6px; padding-top: 5px; width: 404px; height: 29px; clear: both; }
+.Calendar .dualBig .calButtonLeft { float: left; }
+.Calendar .dualBig .calButtonRight { float: right; margin-right: -9px; }
+.Calendar .dualBig .rangeStartCal { float: left; }
+.Calendar .dualBig .rangeEndCal { float: right; }
+#CALENDAR_CONTAINER .Calendar { margin-top: 3px; }
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+#CALENDAR_CONTAINER .Calendar .calBig .calTop .vg-SelOneMenuInput { line-height: 18px; }
+#CALENDAR_CONTAINER .Calendar .calBig .calTop .vg-SelOneMenuIconCell { height: 17px; }
+}
+.calArrowImg { background-image: url(../images/ng/cbd/calendar/calendar_icons.png); background-position: -9px -8px; height: 13px; width: 13px; }
+.calSmall .calTop .leftArrow:hover .calArrowImg { background-position: -9px -28px; }
+.calSmall .calTop .rightArrow .calArrowImg { background-position: -10px -48px; }
+.calSmall .calTop .rightArrow:hover .calArrowImg { background-position: -10px -66px; }
+.calBig .calTop .leftArrow .calArrowImg { background-position: -10px -88px; }
+.calBig .calTop .leftArrow:hover .calArrowImg { background-position: -10px -112px; }
+.calBig .calTop .rightArrow .calArrowImg { background-position: -10px -136px; }
+.calBig .calTop .rightArrow:hover .calArrowImg { background-position: -10px -160px; }
+.dataTable .Calendar th { border-right: 0px !important; border-top: 0px !important; height: 25px; }
+.dataTable .Calendar .calBig .calTop .vg-SelOneMenuDropDownAtBottom {  _background-position: 50% 4px !important;  }
+.dataTable .Calendar .calBig .calTop .vg-SelOneMenuDropDownOnTop[class] { background-position: 50% 12px; }
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+.dataTable .Calendar .calBig .calTop .vg-SelOneMenuDropDownOnTop[class] { background-position: 3px 12px; }
+.dataTable .Calendar .calBig .calTop .vg-SelOneMenuDropDownAtBottom[class] { background-position: 3px 12px; }
+}
+.summaryTable .Calendar td { padding: 6px 0px 0px 0px !important; }
+.summaryTable .Calendar .calBig .calTop .vg-SelOneMenuDropDownAtBottom {  _background-position: 50% 4px !important;  }
+.summaryTable .Calendar .calBig .calTop .vg-SelOneMenuDropDownOnTop[class] { background-position: 50% 12px; }
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+.summaryTable .Calendar .calBig .calTop .vg-SelOneMenuVisRow td { height: 15px; }
+.summaryTable .Calendar .calBig .calTop .vg-SelOneMenuDropDownOnTop[class] { background-position: 3px 12px; height: 28px; }
+.summaryTable .Calendar .calBig .calTop .vg-SelOneMenuDropDownAtBottom[class] { background-position: 3px 12px; height: 28px; }
+.summaryTable .Calendar .calBig .calTop .vg-SelOneMenuInput { height: 15px; }
+.summaryTable .Calendar .calBig .calTop .vg-SelOneMenuDropUpwards,
+.summaryTable .Calendar .calBig .calTop .vg-SelOneMenuDropDownwards { top: -4px !important; }
+}
+.template12Grid .Calendar .calXL table { border-collapse: collapse; border: 1px solid #ccc; }
+.template12Grid .Calendar .calXL .days th { padding: 0px; margin: 0px; height: 31px; font-size: 13px; }
+.template12Grid .Calendar .calXL .month th { padding: 9px 7px 0px !important; text-align: left; }
+.template12Grid .Calendar .calXL .month .calTop { height: 31px; text-align: right; }
+.template12Grid .Calendar .calXL .calTop .dateSelectors,
+.template12Grid .Calendar .calXL .calTop .calXLTodayLink { display: inline-block; _display: inline; }
+.template12Grid .Calendar .calXL .calTop .dateSelectors { float: left; position: static; }
+.template12Grid .Calendar .calXL .calTop .calXLTodayLink { height: 31px; line-height: 31px; font-size: 14px; border-bottom: none; margin-right: 9px; }
+.template12Grid .Calendar .calXL .calTop .calXLTodayLink:hover { text-decoration: underline; }
+.template12Grid .Calendar .calXL .cdays td { height: 44px; min-height: 44px; max-height: 44px; width: 50px; min-width: 50px; max-width: 50px; font-size: 14px; line-height: 44px; vertical-align: middle; padding: 0px; border: 1px solid #CCC; }
+.template12Grid .Calendar .calXL .cdays td a { display: block; height: auto; width: auto; font-size: 100%; }
+.template12Grid .Calendar .calXL tr.cdays td.selected a { background: #96151D; }
+.template12Grid .Calendar .calXL tr.cdays td.selected a,
+.template12Grid .Calendar .calXL tr.cdays td.credit a,
+.template12Grid .Calendar .calXL tr.cdays td.debit a,
+.template12Grid .Calendar .calXL tr.cdays td.skip a { color: #FFF; }
+.template12Grid .Calendar .calXL .cdays td.event a.nvo:hover,
+.template12Grid .Calendar .calXL .cdays td.exchange a.nvo:hover { color: #8D4900; }
+.template12Grid .Calendar .calXL .cdays td.otherdate,
+.template12Grid .Calendar .calXL .cdays td.otherdate a { color: #999; text-decoration: none; }
+.Calendar .calTop .comp-Menu,
+.Calendar .calTop .comp-Menu .calSelectMonth,
+.Calendar .calTop .comp-Menu .calSelectMonth .vg-menu,
+.Calendar .calTop .comp-Menu .calSelectYear,
+.Calendar .calTop .comp-Menu .calSelectYear .vg-menu { display: inline-block; _display: inline; }
+.Calendar .calTop .vg-menu .yui3-menubar-label { height: 25px; line-height: 23px; padding: 0px 8px;  border: 1px solid #EAE5DA; text-align: right; }
+.template12Grid .Calendar .calXL .calTop .vg-menu .yui3-menubar-label { font-size: 14px; height: 31px; line-height: 30px; padding: 0px 9px; }
+.Calendar .calTop .vg-menu .yui3-menu-label-menuvisible { background-color: #fff; border: 1px solid #ccc; }
+.Calendar .calTop .vg-menu .yui3-menubar-label .vg-menuLabelSpanScroll { padding: 0px 6px 0px 0px; }
+.Calendar .calTop .vg-menu .yui3-menubar-label .vg-menuLabelSpanScroll,
+.Calendar .calTop .vg-menu .yui3-menubar-label .vg-menuLabelSpanScroll .vg-menuLabelSpanScrollInner { height: auto; width: auto; display: inline-block; _display: inline; }
+.Calendar .calTop .vg-menu .yui3-menubar-label .vg-menuLabelSpanScroll { float: left; }
+.Calendar .calTop .vg-menu .vg-menuImg { width: 9px; min-width: 9px; max-width: 9px; vertical-align: baseline; line-height: 14px; _margin-top: 4px; }
+.Calendar .calTop .vg-menu .yui3-menu-label-active,
+.Calendar .calTop .vg-menu .yui3-menu-label-menuvisible { color: #96151D;}
+.Calendar .calTop .vg-menu .yui3-menu-label-active .vg-menuImg,
+.Calendar .calTop .vg-menu .yui3-menu-label-menuvisible .vg-menuImg { background-position: 0px -785px; }
+@-moz-document url-prefix() {
+.template12Grid .Calendar .calXL .calTop .vg-menu .yui3-menubar-label .vg-menuLabelSpanScroll,
+.template12Grid .Calendar .calXL .calTop .vg-menu .yui3-menubar-label .vg-menuLabelSpanScroll .vg-menuLabelSpanScrollInner { height: 34px; }
+}
+.Calendar .calTop .vg-menu ul .yui3-menu .yui3-menu-content { padding: 3px; }
+.Calendar .calTop .vg-menu ul .yui3-menu .yui3-menu-content .yui3-menuitem,
+.Calendar .calTop .vg-menu ul .yui3-menu .yui3-menu-content .yui3-menuitem .yui3-menu-label { height: auto; line-height: normal; display: block; float: none; }
+.Calendar .calTop .vg-menu ul .yui3-menu .yui3-menu-content .yui3-menu-label { padding: 5px 6px; }
+.template12Grid .Calendar .calXL .calTop .vg-menu ul .yui3-menu .yui3-menu-content .yui3-menu-label { padding: 6px; font-size: 14px; }
+.Calendar .calTop .calSelectMonth .vg-menu .yui3-menu,
+.Calendar .calTop .calSelectMonth .vg-menu .yui3-menubar-label { width: 94px; cursor: pointer; }
+.template12Grid .Calendar .calXL .calTop .calSelectMonth .vg-menu .yui3-menu,
+.template12Grid .Calendar .calXL .calTop .calSelectMonth .vg-menu .yui3-menubar-label { width: 104px; }
+.Calendar .calTop .calSelectYear .vg-menu .yui3-menu,
+.Calendar .calTop .calSelectYear .vg-menu .yui3-menubar-label { width: 61px; _width: 64px; cursor: pointer; }
+.template12Grid .Calendar .calXL .calTop .calSelectYear .vg-menu .yui3-menu,
+.template12Grid .Calendar .calXL .calTop .calSelectYear .vg-menu .yui3-menubar-label { width: 68px; _width: 71px; }
+.winShade .vg-NavboxContent .Calendar .calTop .dateSelectors,
+.winShade .vg-NavboxContent .Calendar .calTop .dateSelectors .comp-Menu,
+.winShade .vg-NavboxContent .Calendar .calTop .dateSelectors .comp-Menu .calSelectMonth,
+.winShade .vg-NavboxContent .Calendar .calTop .dateSelectors .comp-Menu .calSelectYear,
+.winShade .vg-NavboxContent .Calendar .calTop .dateSelectors .comp-Menu .vg-menu,
+.winShade .vg-NavboxContent .Calendar .calTop .dateSelectors .comp-Menu .vg-menu .yui3-menu-content,
+.winShade .vg-NavboxContent .Calendar .calTop .dateSelectors .comp-Menu .vg-menu .yui3-menu-content ul,
+.winShade .vg-NavboxContent .Calendar .calTop .dateSelectors .comp-Menu .vg-menu .yui3-menu-content ul li,
+.winShade .vg-NavboxContent .Calendar .calTop .dateSelectors .comp-Menu .yui3-menubar-label *,
+.winShade .vg-NavboxContent .Calendar .calTop .calXLTodayLink { background-color: transparent; }
+

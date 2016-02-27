@@ -1,0 +1,128 @@
+.alignTickerText {
+	padding-top: 9px!important
+}
+
+.dataTableNoMarginBottom {
+	MARGIN-BOTTOM: 0px;
+}
+
+.dataTableNoMarginTop {
+	MARGIN-TOP: 0px;
+}
+
+.dataTableSmallBottomMargin {
+	MARGIN-BOTTOM: 1px;
+}
+
+.dataTable tr.dataTableRowColor {
+	BACKGROUND-COLOR: #EAE5DA
+}
+
+.dataTable td.dataTableWidgetHeadRow {
+	VERTICAL-ALIGN: middle;
+	TEXT-ALIGN: left
+}
+
+.dataTable td.dataTableWidgetRow {
+	VERTICAL-ALIGN: middle;
+	TEXT-ALIGN: center;
+	BORDER-TOP-WIDTH: 2px;
+	PADDING-BOTTOM: 0px;
+}
+
+.dataTable td.dataTableCellPadding {
+	PADDING: 0px 6px 0px 6px;
+}
+
+.gridTable tr.gridTableRow {
+	BACKGROUND-COLOR: #EAE5DA;
+}
+
+.gridTable td.gridTableCellPadding {
+	PADDING: 0px 7px 6px 4px;
+}
+
+.gridTable td.gridTable9BoxPadding {
+	PADDING: 6px 0px 0px 0px;
+	HEIGHT: 183px;
+}
+
+.widget-flippers {
+	float: left;
+	color: #fff;
+	background-color: #EAE5DA;
+	height: 25px;
+	border-bottom-style: solid;
+	border-bottom-color: #97151d;
+	border-bottom-width: 2px;
+	border-right-style: solid;
+	border-right-color: #CAC7BE;
+	border-right-width: 1px;
+	text-align: center;
+	line-height: 2em
+}
+
+.widget-flippers-selected {
+	float: left;
+	background-color: #97151d;
+	color: #fff;
+	height: 25px;
+	border-bottom-style: solid;
+	border-bottom-color: #97151d;
+	border-bottom-width: 2px;
+	text-align: center;
+	line-height: 2em
+}
+
+.widget-flippers-selected a:link,.widget-flippers-selected a:visited {
+	text-decoration: none;
+	font-size: 13px;
+	border: 0px;
+	color: #fff;
+}
+
+.widget-flippers a:link,.widget-flippers a:visited {
+	text-decoration: none;
+	font-size: 11px;
+	border: 1px;
+	color: #333;
+}
+
+.widget-block {
+	margin-bottom: 2px;
+	padding: 0px 0px 0px 0px;
+	float: left;;
+	display: block;
+	background-color: #fff;
+}
+
+.widget-body {
+	background-color:#e9e5da;
+	margin-bottom:1px;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:12px;
+	padding:10px;
+	width:228px;
+}
+
+.widget-header {
+	font-family:Arial, Helvetica, sans-serif;
+	color:#333;
+	font-size:12px;/*text-transform:uppercase;*/
+}
+
+.widget-header-text{
+	text-decoration: none;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #96151D;
+}
+
+.widget-red{
+	COLOR: rgb(150,21,29)
+}
+
+.rowHeadCustom { width: 80px; }
+@media screen and (-webkit-min-device-pixel-ratio:0) { .rowHeadCustom { width: 90px; }  }
+
+.nrp {padding-right: 0px;} 

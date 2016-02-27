@@ -1,0 +1,354 @@
+
+html 
+{
+	-moz-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+
+/* flyout component hidden  */
+[ng-cloak], [data-ng-cloak] , .ng-cloak {display: none !important;}
+
+
+/*BOXES*/
+
+#fasCustomPersistLayer.ng-layer{
+	width:1002px !important;
+	padding:0 28px 0 8px !important;
+	top:173px !important;
+}
+
+.xLdrTop{
+	top: 161px !important;
+    }
+
+@media ( min-width : 600px ) and ( max-width: 1000px ) {
+	#fasCustomPersistLayer.ng-layer{
+    width:100% !important;
+    padding:0 18px 0 18px !important;
+    left:0px !important;
+    top:103px !important;
+}
+
+.xLdrTop{
+    left: 90% !important;
+top: 91px !important;
+
+}
+
+.respLayerBig {
+    max-width: 1002px !important;
+    width: 100% !important;
+}
+
+#comp-BrowseOurProductsButton .commandButton div {
+	width:157px !important;
+}
+
+#fundHeader h1.option2{
+	font-size: 1.2em;
+}
+
+}
+
+.mainFlyoutContainer {
+	 position:absolute;
+	 width:100%;
+	 _width:1002px;
+	 z-index:0;
+	 max-width:1002px;
+	 margin-left:-18px;
+	 padding:0px 16px 12px 18px;
+}
+
+.flyoutContainer {
+	height:350px;
+	background-color:#F1F0EC; 
+	border:solid 1px #D4CFC3;
+	border-right: solid 1px #D4CFC3 !important;
+	float:left;	
+	width:25%;	
+}
+ 
+.assetBlock {
+	padding:0px;
+	padding-left:17px;
+	padding-right:16px;
+	 
+}
+
+
+/*LIST ITEM STYLES*/	
+.flyoutContainer ul {
+	padding-top:7px;
+    margin-left:-25px !important;
+}
+
+.flyoutContainer ul li {
+	background-color:#F1F0EC; 
+	border-bottom:solid 1px #D4CFC3; 
+	border-top:solid 1px #D4CFC3; 
+	cursor:pointer; 
+	padding:9px 0 9px 3px; 
+	_padding-top: 7px;
+	_padding-bottom: 7px;
+	margin-top:-7px;
+	font: 14px Arial, Helvetica, sans-serif; color:#333;
+	list-style:none;
+	margin-left:-15px;	
+	
+}
+.flyoutContainer ul li:hover {color:#96151d;}
+
+.flyoutContainer ul>:first-child{
+ 	border-top:solid 1px #A8A093; 
+ } 
+
+.flyoutContainer ul li.onHoverAssetClass {
+	color:#96151d;
+	background-color:#E0DBD0; 
+	margin-left: -33px;
+	_margin-left: -33px;
+	_padding-left: 23px;
+	padding-left: 21px;
+	margin-right: -24px;
+	padding-right: 24px;
+	margin-left: -32px \0/;
+    padding-left: 20px \0/;   
+	}
+
+.flyoutContainer ul li.active {
+    color:#96151d;
+    background-color:#E0DBD0; 
+    margin-left: -33px;
+    _margin-left: -33px;
+    _padding-left: 23px;
+    padding-left: 21px;
+    margin-right: -24px;
+    padding-right: 24px;
+    margin-left: -32px \0/;
+    padding-left: 20px \0/;   
+    }
+.className {
+	_width:93%;
+	margin-left: 3px;
+}
+
+.subAssetBlock {
+	padding:8px; 
+	padding-left:17px;
+    padding-right:16px;
+	height:350px;
+	background-color:#E0DBD0; 
+	border-top:solid 1px #D4CFC3;
+	border-bottom:solid 1px #D4CFC3;
+	border-right:solid 1px #D4CFC3;		
+	padding-top:6px;
+	float:left;
+	width:25%;
+}
+
+.subAssetBlock ul{
+	margin-left: -30px;
+	_margin-left: 8px;
+}
+.subAssetBlock ul li {
+	background-color:#E0DBD0; 
+	border-bottom:solid 1px #D4CFC3;
+	border-top:solid 1px #D4CFC3; 
+	cursor:pointer; 
+	padding:9px 0 9px 10px; 
+	_padding-top: 7px;
+	_padding-bottom: 7px;
+	margin-top:-7px;
+	margin-left:-10px;
+	font: 14px Arial, Helvetica, sans-serif; color:#333;
+	list-style:none;
+}
+ 
+.subAssetBlock ul li.onHoverSubAssetClass {
+	color:#96151d;
+	background-color:#FFF;
+	margin-left: -28px;
+    padding-left: 28px;
+	margin-right: -19px;
+	padding-right: 19px;	
+}
+
+.subAssetBlock ul li:hover {color:#96151d;}
+
+.fundsListBlock {	
+	height:350px;
+	background-color:#fff; 
+	border-top:solid 1px #D9D9D9;
+	border-bottom:solid 1px #D9D9D9;
+	border-right:solid 1px #D9D9D9;
+	overflow:auto;
+	padding:6px 18px 0px;
+	width:50%;
+	float:left;
+}	
+
+.fundsListBlock ul{
+	padding-left:25px;
+	_margin-left:-8px;
+	_padding-left:8px;
+	margin-bottom:168px;
+}
+
+.fundsListBlock ul li { 
+	background-color:#fff; 
+	border-bottom:solid 1px #D9D9D9; 
+	border-top:solid 1px #D9D9D9; 
+	cursor:pointer; 
+	padding:9px 0 9px 12px;  
+	margin-top:-7px;
+	margin-left: 13px;
+	font: 14px Arial, Helvetica, sans-serif; 
+	color:#333;
+	list-style:none;
+	position:relative;
+	padding-left: 12px \0/;
+}
+
+.fundsListBlock ul li.highlightFund {
+	color:#FFF;
+	background-color:#96151d;
+	margin-left: -10px;
+	padding-left: 35px;
+	margin-right:-18px;
+	padding-right:35px;
+	padding-left: 32px \0/;
+}
+
+
+.bannerWidth {
+	width:75%;
+	float:right;
+}
+
+
+/*list item Arrow image style*/
+.buttonWrapper {
+	border-bottom: solid 3px #96151d;
+	/*height:28px;*/
+	height:27px;
+	height:31px \0/;
+	
+}	
+	
+.arrowImg {
+	height:16px;
+	width:7px;
+	background-image:url(/iwe/images/icons/product_finder_arrow.png);
+	background-repeat:no-repeat;
+	background-position:right;
+	display: inline-block;
+	float: right; 
+	margin-right:3px;
+	_float:;
+	
+}
+.etfBtn {
+	padding:5px 0px;
+	padding:7px \0/;
+	_padding-bottom:6px;
+	text-align:center; 
+	cursor:pointer; 
+	float:left; 
+	font: 12px Arial, Helvetica, sans-serif;
+	color:#fff;
+	background-color:#96151d;
+	width:25%;
+	}
+
+.mutualBtn {
+	padding:5px 0px;
+	padding:7px \0/;
+	_padding-bottom:6px;
+	text-align:center; 
+	cursor:pointer; 
+	float:left; 
+	font: 12px Arial, Helvetica, sans-serif;
+	width:50%;
+	}
+
+.AllBtn {
+	padding:5px 0px;
+	padding:7px \0/;
+	_padding-bottom:6px;
+	text-align:center; 
+	cursor:pointer; 
+	float:left; 
+	font: 12px Arial, Helvetica, sans-serif;
+	width:25%;
+	}
+
+/* autosuggest */
+.autoSuggestRow
+{
+	padding: 0px 18px 0px 18px;
+	margin-bottom: 19px;
+}
+
+.errorBox
+{
+	background-color: #FAF2BB;
+	background-image: url(../images/ng/cbd/errorhandling/errorCell.gif);
+	background-repeat: repeat-y;
+	background-position: left;
+	padding-left: 5px;
+	border-bottom: solid 1px #D9D9D9;
+	border-left: solid 3px red;
+}
+/* browseProduct css - autosuggestInput */
+.searchIconSkin input.asNoFocus{
+	background-image: url("/web/images/gh2/ghImages_16_750.png");
+	background-position: -1px -435px;
+	background-repeat: no-repeat;
+	padding-left:23px !important;
+	padding-right:0px;
+	padding-top:0px !important;
+	_padding-top:8px !important;
+	color: #666666;
+}
+
+.searchIconSkin.Sml input.asNoFocus, .searchIconSkin.Sml input.asFocus{
+	font-size: 16px;
+}
+
+.searchIconSkin input.asFocus{ 
+	background-image: url("/web/images/gh2/ghImages_16_750.png");
+	background-position: -1px -435px;
+	background-repeat: no-repeat;
+	padding-left:23px;
+	padding-right:23px;
+	_padding-top:8px !important;
+}
+
+/* small */
+
+@media screen and (max-width: 599px)
+{
+    .leftNavCustomSkin .leftNav ul li.expandable a:hover .categoryText { color: #333333;}
+	.leftNavCustomSkin .branchGroup .itemLabel .expandableSpan a:hover .itemLabel {background:#F4F2EC; cursor:default;font-style:normal;}
+	.leftNavCustomSkin.respShowAsDropdownOnSml .leftNav .itemLabel a {border-bottom:none;}
+	.leftNavCustomSkin .branchGroup {border-bottom:1px solid #999999;}
+	.leftNavCustomSkin.respShowAsDropdownOnSml .leftNav div.itemList{border-bottom:none;}
+	
+	.bannerWidth {width:100%;padding-left:0px;}
+}	
+
+@media ( min-width: 600px ) and ( max-width: 1000px )
+{
+	.flyoutContainer{width:33.333%;}
+	.subAssetBlock {width:33.333%;}
+	.fundsListBlock {width:33.333%;}
+	.bannerWidth {width:66.666%;float:right;}
+} 
+@-moz-document url-prefix() {
+  .flyoutContainer ul li.onHoverAssetClass {
+  	margin-left: -32px;
+  	padding-left: 20px;
+  }
+}
