@@ -3,6 +3,7 @@ from mysite import db
 import datetime
 import time
 import os
+import logging
 
 from selenium.webdriver.common.by import By
 import selenium.common.exceptions
@@ -38,7 +39,7 @@ class Fund(db.Model):
         return "https://personal.vanguard.com/us/funds/snapshot?FundIntExt=INT&FundId=%04d#tab=0" % self.id
 
     def parse_overview(self, driver):
-        print self.overview_url
+        logging.debug(self.overview_url)
 
         table = _web_lookup(self.overview_url, driver, "//table[@id='fundFactsTable']")[0]
 
@@ -57,7 +58,7 @@ class Fund(db.Model):
         return "https://advisors.vanguard.com/VGApp/iip/site/advisor/investments/price?fundId=%04d" % self.id
 
     def parse_market_data(self, driver):
-        print self.market_data_url
+        logging.debug(self.market_data_url)
 
         prices_table, dividends_table = _web_lookup(
             self.market_data_url, 
@@ -113,7 +114,7 @@ class Fund(db.Model):
                 reinvest_date, reinvest_price
             )
 
-        print fd
+        logging.debug(fd)
         db.session.add(fd)
 
     def add_price(self, date, price):
@@ -124,11 +125,11 @@ class Fund(db.Model):
         else:
             fp = FundPrice(self, date, price)
 
-        print fp
+        logging.debug(fp)
         db.session.add(fp)
 
     def historical_prices(self, driver, directory):
-        print self.market_data_url
+        logging.debug(self.market_data_url)
         (button,) = _web_lookup(
             self.market_data_url, driver, "//*[@id='priceForm:sinceInceptionLink']"
         )
@@ -154,13 +155,13 @@ def _web_lookup(url, driver, *items):
     for _ in range(1, 4):
         try:
             if _ > 1:
-                print "download attempt %d" % _
+                logging.debug("download attempt %d" % _)
 
             driver.get(url)
             return [driver.find_element_by_xpath(x) for x in items]
 
         except selenium.common.exceptions.NoSuchElementException as e:
-            print "error downloading page."
+            logging.debug("error downloading page.")
             if _ < 3:
                 time.sleep(3)
             else:
