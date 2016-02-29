@@ -10,7 +10,7 @@ from selenium import webdriver
 from mysite import db, models
 from config import basedir
 
-from funds import extractFunds
+from extract import extract_funds
 
 from mock import patch
 
@@ -33,11 +33,10 @@ class TestCase(unittest.TestCase):
         self.display.stop()
 
     def test_extract_funds(self):
-        funds = extractFunds(
+        funds = extract_funds(
             # some javascript going on that I can't figure out how to mock
             #'file:///%s/t/test_files/list_mutual_funds.html' % basedir,
 
-            'https://investor.vanguard.com/mutual-funds/list#/mutual-funds/asset-class/month-end-returns',
             self.driver
         )
 
