@@ -8,6 +8,8 @@ import logging
 from selenium.webdriver.common.by import By
 import selenium.common.exceptions
 
+logger = logging.getLogger(__name__)
+
 class Fund(db.Model):
     __tablename__ = 'funds'
 
@@ -39,7 +41,7 @@ class Fund(db.Model):
         return "https://personal.vanguard.com/us/funds/snapshot?FundIntExt=INT&FundId=%04d#tab=0" % self.id
 
     def parse_overview(self, driver):
-        logging.debug(self.overview_url)
+        logger.info('parse_overview: %s' % self.overview_url)
 
         table = _web_lookup(self.overview_url, driver, "//table[@id='fundFactsTable']")[0]
 
@@ -48,17 +50,17 @@ class Fund(db.Model):
             if len(x.find_elements_by_xpath('td')) > 1
         ]
 
+
         self.category = trs[1].find_elements_by_xpath('td')[1].text
-        self.minimum = float(
-            trs[3].find_elements_by_xpath('td')[1].text[1:].replace(',', '')
-        )
+        minimum = trs[3].find_elements_by_xpath('td')[1].text.lower()
+        self.minimum = minimum if minimum == 'closed' else _to_float(minimum)
 
     @property
     def market_data_url(self):
         return "https://advisors.vanguard.com/VGApp/iip/site/advisor/investments/price?fundId=%04d" % self.id
 
     def parse_market_data(self, driver):
-        logging.debug(self.market_data_url)
+        logger.info('parse_market_data: %s' % self.market_data_url)
 
         prices_table, dividends_table = _web_lookup(
             self.market_data_url, 
@@ -69,100 +71,127 @@ class Fund(db.Model):
 
         trs = prices_table.find_elements_by_xpath('tbody/tr')
         for tr in trs[1:]:
-            tds = tr.find_elements_by_xpath('td')
-            date = datetime.datetime.strptime(tds[0].text, "%m/%d/%Y").date()
-            price = float(tds[1].text[1:].replace(",", ""))
-            
-            self.add_price(date, price)
+            self.add_price([x.text for x in tr.find_elements_by_xpath('td')])
 
         trs = dividends_table.find_elements(By.TAG_NAME, 'tr')
         for tr in trs[1:]:
-            tds = tr.find_elements(By.TAG_NAME, 'td')
-            if not tds or len(tds) < 5:
-                continue
+            self.add_dividend([x.text for x in tr.find_elements(By.TAG_NAME, 'td')])
 
-            dividend_type = tds[0].text
-            price_per_share = float(tds[1].text[1:].replace(",", ""))
-            payable_date = datetime.datetime.strptime(tds[2].text, "%m/%d/%Y").date()
-            record_date = datetime.datetime.strptime(tds[3].text, "%m/%d/%Y").date()
-            reinvest_date = datetime.datetime.strptime(tds[4].text, "%m/%d/%Y").date()
-            reinvest_price = float(tds[1].text[5:].replace(",", ""))
+    def add_dividend(self, data):
+        try:
+            dividend_type = data[0]
+            price_per_share = _to_float(data[1])
+            payable_date = datetime.datetime.strptime(data[2], "%m/%d/%Y").date()
+            record_date = datetime.datetime.strptime(data[3], "%m/%d/%Y").date()
+            reinvest_date = datetime.datetime.strptime(data[4], "%m/%d/%Y").date()
+            reinvest_price = _to_float(data[5])
 
-            self.add_dividend(
-                dividend_type, price_per_share, payable_date, record_date, 
-                reinvest_date, reinvest_price
-            )
+            fd = [
+                fd for fd in self.dividends
+                if fd.payable_date == payable_date and fd.dividend_type == dividend_type
+            ]
 
-    def add_dividend(self, dividend_type, price_per_share, payable_date, record_date, 
-        reinvest_date, reinvest_price
-    ):
-        fd = [
-            fd for fd in self.dividends
-            if fd.payable_date == payable_date and fd.dividend_type == dividend_type
-        ]
+            if fd:
+                fd = fd[0]
+                fd.price_per_share = price_per_share
+                fd.record_date = record_date
+                fd.reinvest_date = reinvest_date
+                fd.reinvest_price = reinvest_price
 
-        if fd:
-            fd = fd[0]
-            fd.price_per_share = price_per_share
-            fd.record_date = record_date
-            fd.reinvest_date = reinvest_date
-            fd.reinvest_price = reinvest_price
+            else:
+                fd = FundDividend(
+                    self, dividend_type, price_per_share, payable_date, record_date, 
+                    reinvest_date, reinvest_price
+                )
 
-        else:
-            fd = FundDividend(
-                self, dividend_type, price_per_share, payable_date, record_date, 
-                reinvest_date, reinvest_price
-            )
+            logger.debug(fd)
+            db.session.add(fd)
 
-        logging.debug(fd)
-        db.session.add(fd)
+        except (ValueError, IndexError):
+            pass
 
-    def add_price(self, date, price):
-        fp = [fp for fp in self.prices if fp.date == date]
-        if fp:
-            fp = fp[0]
-            fp.price = price
-        else:
-            fp = FundPrice(self, date, price)
+    def add_price(self, data):
+        try:
+            date = datetime.datetime.strptime(data[0], "%m/%d/%Y").date()
+            price = _to_float(data[1])
 
-        logging.debug(fp)
-        db.session.add(fp)
+
+            fp = [fp for fp in self.prices if fp.date == date]
+            if fp:
+                fp = fp[0]
+                fp.price = price
+            else:
+                fp = FundPrice(self, date, price)
+
+            logger.debug(fp)
+            db.session.add(fp)
+
+        except (ValueError, IndexError):
+            pass
 
     def historical_prices(self, driver, directory):
-        logging.debug(self.market_data_url)
-        (button,) = _web_lookup(
-            self.market_data_url, driver, "//*[@id='priceForm:sinceInceptionLink']"
+        logger.info('historical prices: %s' % self.market_data_url)
+
+        header, button = _web_lookup(
+            self.market_data_url, 
+            driver, 
+            "//*[@id='fundHeader']/h1",
+            "//*[@id='priceForm:sinceInceptionLink']"
         )
         button.click()
+        # sometimes file isn't saved in time for os.listdir()
+        time.sleep(.5)
 
-        filename = os.listdir(directory)[0]
-        fh = open("%s/%s" % (directory, filename), 'r')
-        for line in fh.read().splitlines()[2:-1]:
-            data = line.split(',')
-            try:
-                date = datetime.datetime.strptime(data[0], '%m/%d/%Y').date()
-                self.add_price(date, float(data[1][1:].replace(',', '')))
-            except ValueError:
-                pass
+        _process_file(directory, header, self.add_price)
 
-        os.remove("%s/%s" % (directory, filename))
+    def historical_dividends(self, driver, directory):
+        logger.info('historical dividends: %s' % self.market_data_url)
 
-    def historical_dividends(self, driver):
-        pass
+        header, startdate, enddate, button = _web_lookup(
+            self.market_data_url, 
+            driver, 
+            "//*[@id='fundHeader']/h1",
+            "//*[@id='priceForm:distPricesStartDate']",
+            "//*[@id='priceForm:distPricesEndDate']",
+            "//*[@id='priceForm:exportDistributions']",
+        )
 
+        mm, dd, yyyy = [int(x) for x in enddate.get_attribute('value').split('/')]
+        startdate.send_keys("%d/%d/%d", mm, dd, yyyy-10)
+
+        button.click()
+        # sometimes file isn't saved in time for os.listdir()
+        time.sleep(.5)
+        
+        _process_file(directory, header, self.add_dividend)
+
+def _process_file(directory, header, cb):
+    name = header.get_attribute('innerHTML').split('&nbsp;')[0]
+    files = os.listdir(directory)
+    for filename in files:
+        with open("%s/%s" % (directory, filename), 'r') as fh:
+            lines = fh.read().splitlines()
+            if len(lines) > 0 and name in lines[0]:
+                for line in lines[2:-1]:
+                    cb(line.split(','))
+
+        os.unlink("%s/%s" % (directory, filename))
+
+def _to_float(x):
+    return float(x[1:].replace(',', ''))
 
 def _web_lookup(url, driver, *items):
-    for _ in range(1, 4):
+    for attempt in range(1, 4):
         try:
-            if _ > 1:
-                logging.debug("download attempt %d" % _)
+            if attempt > 1:
+                logger.info("download attempt %d" % attempt)
 
             driver.get(url)
             return [driver.find_element_by_xpath(x) for x in items]
 
         except selenium.common.exceptions.NoSuchElementException as e:
-            logging.debug("error downloading page.")
-            if _ < 3:
+            logger.warn("error downloading page.")
+            if attempt < 3:
                 time.sleep(3)
             else:
                 raise e
