@@ -1,6 +1,7 @@
 import os
 import unittest
 import datetime 
+import logging
 
 from mysite import app, db
 
@@ -14,6 +15,8 @@ from mock import patch, PropertyMock
 
 class TestCase(unittest.TestCase):
     def setUp(self):
+        logging.basicConfig(level=logging.ERROR)
+
         app.config['TESTING'] = True
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
         self.app = app.test_client()
