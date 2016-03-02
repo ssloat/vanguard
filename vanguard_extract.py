@@ -9,6 +9,7 @@ from selenium.webdriver.common.by import By
 import selenium.common.exceptions
 
 from mysite import db, models
+from mysite.models.vanguard import VanguardFund, VanguardPrice, VanguardDividend
 
 def extract_funds(driver): 
     url = 'https://investor.vanguard.com/mutual-funds/list#/mutual-funds/asset-class/month-end-returns' 
@@ -27,13 +28,13 @@ def extract_funds(driver):
         fund_name = span.get_attribute('innerHTML')
         fund_id = int(re.match(r'.*FundId=(\d+)', a.get_attribute('href')).group(1))
 
-        fund = db.session.query(models.Fund).filter(models.Fund.id==fund_id).first()
+        fund = db.session.query(VanguardFund).filter(VanguardFund.id==fund_id).first()
         if not fund:
             ticker = tds[2].text
             asset_class = tds[3].text
             exp_ratio = float(tds[4].text[:-1])
 
-            fund = models.Fund(
+            fund = VanguardFund(
                 fund_id, 'Mutual Fund', fund_name, ticker, asset_class, exp_ratio
             ) 
 
@@ -57,8 +58,11 @@ class DailyExtract:
                 sleep = False
                 for _ in range(2):
                     try:
+                        in_db = db.session.query(VanguardFund).filter(
+                            VanguardFund.id==fund.id
+                        ).first()
 
-                        if not db.session.query(models.Fund).filter(models.Fund.id==fund.id).first():
+                        if not in_db:
                             fund.parse_overview(driver)
                             if fund.minimum == 'closed':
                                 break
@@ -95,8 +99,8 @@ class HistoricalExtract(DailyExtract):
         sleep = False
         
         extracts = [
-            (models.FundPrice, fund.historical_prices),
-            (models.FundDividend, fund.historical_dividends),
+            (VanguardPrice, fund.historical_prices),
+            (VanguardDividend, fund.historical_dividends),
         ]
         for model, cb in extracts:
             values = db.session.query(model).filter(

@@ -2,12 +2,11 @@ import os
 import unittest
 import datetime 
 
-from mysite import app, db, models
+from mysite import app, db
 
 from pyvirtualdisplay import Display
 from selenium import webdriver
 
-from mysite import db, models
 from config import basedir
 
 from extract import extract_funds

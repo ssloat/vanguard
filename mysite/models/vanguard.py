@@ -10,8 +10,8 @@ import selenium.common.exceptions
 
 logger = logging.getLogger(__name__)
 
-class Fund(db.Model):
-    __tablename__ = 'funds'
+class VanguardFund(db.Model):
+    __tablename__ = 'vanguard_funds'
 
     id = db.Column(db.Integer, primary_key=True)
     fund_type = db.Column(db.String(64), nullable=False)
@@ -22,8 +22,9 @@ class Fund(db.Model):
     category = db.Column(db.String(64), nullable=False)
     minimum = db.Column(db.Integer, nullable=False)
 
-    prices = db.relationship('FundPrice', backref='fund')
-    dividends = db.relationship('FundDividend', backref='fund')
+    prices = db.relationship('VanguardPrice', backref='fund')
+    dividends = db.relationship('VanguardDividend', backref='fund')
+    fees = db.relationship('VanguardFee', backref='fund')
 
     def __init__(self, id, fund_type, name, ticker, asset_class, exp_ratio):
         self.id = id
@@ -34,7 +35,7 @@ class Fund(db.Model):
         self.exp_ratio = exp_ratio
 
     def __repr__(self):
-        return "<Fund(%d, '%s', '%s')>" % ((self.id or 0), self.name, self.ticker)
+        return "<VanguardFund(%d, '%s', '%s')>" % ((self.id or 0), self.name, self.ticker)
 
     @property
     def overview_url(self):
@@ -99,7 +100,7 @@ class Fund(db.Model):
                 fd.reinvest_price = reinvest_price
 
             else:
-                fd = FundDividend(
+                fd = VanguardDividend(
                     self, dividend_type, price_per_share, payable_date, record_date, 
                     reinvest_date, reinvest_price
                 )
@@ -121,7 +122,7 @@ class Fund(db.Model):
                 fp = fp[0]
                 fp.price = price
             else:
-                fp = FundPrice(self, date, price)
+                fp = VanguardPrice(self, date, price)
 
             logger.debug(fp)
             db.session.add(fp)
@@ -197,11 +198,11 @@ def _web_lookup(url, driver, *items):
                 raise e
 
 
-class FundPrice(db.Model):
-    __tablename__ = "fund_prices"
+class VanguardPrice(db.Model):
+    __tablename__ = "vanguard_prices"
 
     id = db.Column(db.Integer, primary_key=True)
-    fund_id = db.Column(db.Integer, db.ForeignKey('funds.id'))
+    fund_id = db.Column(db.Integer, db.ForeignKey('vanguard_funds.id'))
     date = db.Column(db.Date, nullable=False)
     price = db.Column(db.Float, nullable=False)
     
@@ -215,15 +216,15 @@ class FundPrice(db.Model):
         self.price = price
 
     def __repr__(self):
-        return "<FundPrice(%d, '%s', '%s', %f)>" % (
+        return "<VanguardPrice(%d, '%s', '%s', %f)>" % (
             (self.id or 0), self.fund.ticker, self.date, self.price
         )
 
-class FundDividend(db.Model):
-    __tablename__ = "fund_dividends"
+class VanguardDividend(db.Model):
+    __tablename__ = "vanguard_dividends"
 
     id = db.Column(db.Integer, primary_key=True)
-    fund_id = db.Column(db.Integer, db.ForeignKey('funds.id'))
+    fund_id = db.Column(db.Integer, db.ForeignKey('vanguard_funds.id'))
     dividend_type = db.Column(db.String, nullable=False)
     price_per_share = db.Column(db.Float, nullable=False)
     payable_date = db.Column(db.Date, nullable=False)
@@ -251,19 +252,17 @@ class FundDividend(db.Model):
         self.reinvest_price = reinvest_price
 
     def __repr__(self):
-        return "<FundDividend(%d, '%s', '%s', %f)>" % (
+        return "<VanguardDividend(%d, '%s', '%s', %f)>" % (
             (self.id or 0), self.fund.ticker, self.payable_date, self.price_per_share
         )
 
-class FundFees(db.Model):
-    __tablename__ = "fund_fees"
+class VanguardFee(db.Model):
+    __tablename__ = "vanguard_fees"
 
     id = db.Column(db.Integer, primary_key=True)
-    fund_id = db.Column(db.Integer, db.ForeignKey('funds.id'))
+    fund_id = db.Column(db.Integer, db.ForeignKey('vanguard_funds.id'))
     fee_type = db.Column(db.String, nullable=False)
     fee = db.Column(db.Float, nullable=False)
-
-    fund = db.relationship("Fund")
 
     def __init__(self, fund, fee_type, fee):
         self.fund = fund

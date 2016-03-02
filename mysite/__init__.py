@@ -7,4 +7,5 @@ app.config.from_object('config')
 
 db = SQLAlchemy(app)
 
-from mysite import views, models
+from mysite import views
+from mysite.models import vanguard
