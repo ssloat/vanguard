@@ -74,8 +74,8 @@ class DailyExtract:
 
                         break
 
-                    except selenium.common.exceptions.StaleElementReferenceException:
-                        logging.warn( "stale record." )
+                    except selenium.common.exceptions.StaleElementReferenceException as e:
+                        logging.warn( "stale record: %s" % e )
 
                     db.session.commit()
                     if sleep:
