@@ -9,7 +9,7 @@ from selenium import webdriver
 
 from config import basedir
 
-from extract import extract_funds
+from vanguard_extract import extract_funds
 
 from mock import patch
 
