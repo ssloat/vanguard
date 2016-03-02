@@ -44,16 +44,15 @@ class VanguardFund(db.Model):
     def parse_overview(self, driver):
         logger.info('parse_overview: %s' % self.overview_url)
 
-        table = _web_lookup(self.overview_url, driver, "//table[@id='fundFactsTable']")[0]
+        table = _web_lookup(self.overview_url, driver, "//table[@id='fundFactsTable']/tbody")[0]
 
         trs = [
-            x for x in table.find_elements_by_xpath("tbody/tr")
-            if len(x.find_elements_by_xpath('td')) > 1
+            x for x in table.find_elements(By.TAG_NAME, 'tr')
+            if len(x.find_elements(By.TAG_NAME, 'td')) > 1
         ]
 
-
-        self.category = trs[1].find_elements_by_xpath('td')[1].text
-        minimum = trs[3].find_elements_by_xpath('td')[1].text.lower()
+        self.category = trs[1].find_elements(By.TAG_NAME, 'td')[1].text
+        minimum = trs[3].find_elements(By.TAG_NAME, 'td')[1].text.lower()
         self.minimum = minimum if minimum == 'closed' else _to_float(minimum)
 
     @property
