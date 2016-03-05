@@ -37,6 +37,18 @@ class VanguardFund(db.Model):
     def __repr__(self):
         return "<VanguardFund(%d, '%s', '%s')>" % ((self.id or 0), self.name, self.ticker)
 
+    def json(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'fund_type': self.fund_type,
+            'ticker': self.ticker,
+            'asset_class': self.asset_class,
+            'exp_ratio': self.exp_ratio,
+            'category': self.category,
+            'minimum': self.minimum,
+        }
+
     @property
     def overview_url(self):
         return "https://personal.vanguard.com/us/funds/snapshot?FundIntExt=INT&FundId=%04d#tab=0" % self.id
@@ -227,6 +239,10 @@ class VanguardPrice(db.Model):
             (self.id or 0), self.fund.ticker, self.date, self.price
         )
 
+    def json(self):
+        return { 'date': self.date.strftime('%Y-%m-%d'), 'price': self.price }
+
+
 class VanguardDividend(db.Model):
     __tablename__ = "vanguard_dividends"
 
@@ -262,6 +278,17 @@ class VanguardDividend(db.Model):
         return "<VanguardDividend(%d, '%s', '%s', %f)>" % (
             (self.id or 0), self.fund.ticker, self.payable_date, self.price_per_share
         )
+
+    def json(self):
+        return { 
+            'dividend_type': self.dividend_type,
+            'price_per_share': self.price_per_share,
+            'payable_date': self.payable_date.strftime('%Y-%m-%d'),
+            'record_date': self.record_date.strftime('%Y-%m-%d'),
+            'reinvest_date': self.reinvest_date.strftime('%Y-%m-%d'),
+            'reinvest_price': self.reinvest_price,
+        }
+
 
 class VanguardFee(db.Model):
     __tablename__ = "vanguard_fees"
