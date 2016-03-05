@@ -1,8 +1,5 @@
 bin/
 dump.py
-run.py
-config.py
-db_create.py
 app.db
 vanguard.db
 *.pyc
