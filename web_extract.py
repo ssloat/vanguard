@@ -8,8 +8,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import selenium.common.exceptions
 
-from mysite import db, models
-from mysite.models.vanguard import VanguardFund, VanguardPrice, VanguardDividend
+from mysite import db
+from mysite.vanguard.models import VanguardFund, VanguardPrice, VanguardDividend
 
 def extract_funds(driver): 
     url = 'https://investor.vanguard.com/mutual-funds/list#/mutual-funds/asset-class/month-end-returns' 

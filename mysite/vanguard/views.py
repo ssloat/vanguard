@@ -2,7 +2,7 @@ from mysite import app, db
 
 from flask import jsonify
 
-from mysite.models.vanguard import VanguardFund, VanguardPrice, VanguardDividend
+from mysite.vanguard.models import VanguardFund, VanguardPrice, VanguardDividend
 
 
 @app.route('/rest/vanguard/v1.0/funds', methods=['GET'])
