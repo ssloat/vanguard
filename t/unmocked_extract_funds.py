@@ -9,7 +9,7 @@ from selenium import webdriver
 
 from config import basedir
 
-from vanguard_extract import extract_funds
+from web_extract import extract_funds
 
 from mock import patch
 
@@ -39,7 +39,7 @@ class TestCase(unittest.TestCase):
             self.driver
         )
 
-        self.assertEqual(len(funds), 124)
+        self.assertTrue(len(funds) > 110)
 
 
 

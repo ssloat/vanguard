@@ -8,7 +8,7 @@ from mysite import app, db
 from pyvirtualdisplay import Display
 from selenium import webdriver
 
-from mysite.models.vanguard import VanguardFund, VanguardPrice
+from mysite.vanguard.models import VanguardFund, VanguardPrice
 from config import basedir
 
 from mock import patch, PropertyMock
