@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block head %}
+  <link href="/static/vanguard/css/table.css" rel="stylesheet">
+{% endblock %}
+{% block content %}
+  {% for asset_class, v in results.items() %}
+    <p>{{ asset_class }}</p>
+    {% for category, table in v.items() %}
+      <p>{{ category }}</p>
+      <table>
+      {% for row in table %}
+        <tr>
+          <td>{{ row.name }}</td>
+          <td>{{ row.ticker }}</td>
+          <td>{{ row.asset_class }}</td>
+          <td>{{ row.category }}</td>
+          <td align="right">{{ "%.2f" % row.exp_ratio }}</td>
+          <td align="right">{{ row.minimum|money }}</td>
+        </tr>
+      {% endfor %}
+      </table>
+    {% endfor %}
+  {% endfor %}
+{% endblock %}
