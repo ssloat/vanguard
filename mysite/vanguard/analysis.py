@@ -28,18 +28,12 @@ def rolling_table(ticker):
         axis=1
     )
 
-    return [
-        (
-            _to_date(d), _to_float(x[0][d]), _to_float(x[1][d]), 
-            _to_float(x[2][d]), _to_float(x[3][d])
-        )
-        for d in x.index
-    ]
+    #return [
+    #    (d, x[0][d], x[1][d], x[2][d], x[3][d])
+    #    for d in x.index
+    #]
 
-def _to_float(pd_float):
-    return None if numpy.isnan(pd_float) else pd_float
 
-def _to_date(pd_date):
-    y, m, d = map(int, pd_date.strftime('%Y-%m-%d').split('-'))
-    return datetime.date(y, m, d)
+    return [ [d] + list(row) for d, row in x.iterrows() ]
+
 

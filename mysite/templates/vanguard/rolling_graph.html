@@ -1,38 +1,31 @@
 {% extends "base.html" %}
 {% block head %}
-    <link rel="stylesheet" href="/static/css/jquery.treetable.css" type="text/css" />
-    <link rel="stylesheet" href="/static/css/jquery.treetable.theme.default.css" type="text/css" />
-    <link rel="stylesheet" href="/static/css/screen.css" type="text/css" />
-
     <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-      google.load('visualization', '1.1', {'packages':['line']});
-      google.setOnLoadCallback(drawChart);
+      google.charts.load('current', {'packages':['annotatedtimeline']});
+      google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
         var data = new google.visualization.DataTable();
         data.addColumn('date', 'Date');
+        //data.addColumn('string', 'Date');
         data.addColumn('number', 'Price');
         data.addColumn('number', '30d Price');
         data.addColumn('number', '90d Price');
         data.addColumn('number', '180d Price');
         data.addRows([
-            {% for row in results %}
-              [new Date({{ row[0].year }}, {{ row[0].month-1 }}, {{row[0].day}}){% for x in row[1:5] %}, {{x if x else 'null'}}{% endfor %}],
-            {% endfor %}
-        ]);
-
-        // Set chart options
-        var options = { 'width':900, 'height':500 };
+        {% for row in results %} 
+          [{{row | join(',')}}], 
+        {% endfor %} ]);
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.charts.Line(document.getElementById('linechart_div'));
-        chart.draw(data, options);
+        var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('chart_div'));
+        chart.draw(data, {displayAnnotations: true, scaleType: 'allmaximized'});
       }
     </script>
 {% endblock %}
 {% block content %}
-  <div id="linechart_div"></div>
+  <div id="chart_div" style="width: 1000px; height: 600px"></div>
 {% endblock %}
 
