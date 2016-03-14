@@ -67,10 +67,10 @@ def _format(x):
 
     if isinstance(x, pandas.tslib.Timestamp):
         y, m, d = map(int, x.strftime('%Y-%m-%d').split('-'))
-        return "new Date(%d, %d, %d)" % (y, m, d)
+        return "new Date(%d, %d, %d)" % (y, m-1, d)
 
     if isinstance(x, datetime.date):
-        return "new Date(%d, %d, %d)" % (x.year, x.month, x.day)
+        return "new Date(%d, %d, %d)" % (x.year, x.month-1, x.day)
 
     return x
 
