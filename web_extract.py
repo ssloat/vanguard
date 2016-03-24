@@ -2,6 +2,9 @@ import re
 import time
 import logging
 import sys
+import urllib3
+
+from bs4 import BeautifulSoup
 
 from pyvirtualdisplay import Display
 from selenium import webdriver
@@ -11,10 +14,13 @@ import selenium.common.exceptions
 from mysite import db
 from mysite.vanguard.models import VanguardFund, VanguardPrice, VanguardDividend
 
-def extract_funds(driver): 
+def extract_funds(http): 
     url = 'https://investor.vanguard.com/mutual-funds/list#/mutual-funds/asset-class/month-end-returns' 
     logging.debug(url)
-    driver.get(url)
+    r = http.urlopen('GET', url)
+
+    print r.data
+    soup = BeautifulSoup(r.data, 'html5lib')
 
     funds = []
     elems = driver.find_elements_by_xpath('//*[@class="productEntry"]')
@@ -44,53 +50,16 @@ def extract_funds(driver):
 
 class DailyExtract:
     def run(self):
-        display = None
-        driver = None
-        try:
-            display = Display(visible=0, size=(800, 600))
-            display.start()
+        funds = db.session.query(VanguardFund).all()
 
-            driver = webdriver.Firefox()
-            driver.implicitly_wait(3)
-            funds = extract_funds(driver)
+        http = urllib3.PoolManager()
+        for fund in funds:
+            logging.info('Processing %d' % fund.id)
+            fund.parse_market_data(http)
 
-            for fund in funds:
-                logging.info('Processing %d' % fund.id)
-                for _ in range(2):
-                    try:
-                        in_db = db.session.query(VanguardFund).filter(
-                            VanguardFund.id==fund.id
-                        ).first()
+        db.session.commit()
+        time.sleep(5)
 
-                        if not in_db:
-                            fund.parse_overview(driver)
-                            if fund.minimum == 'closed':
-                                break
-
-                            db.session.add(fund)
-
-                        self.process_data(fund, driver)
-
-                        break
-
-                    except selenium.common.exceptions.StaleElementReferenceException as e:
-                        logging.warn( "stale record: %s" % e )
-
-                db.session.commit()
-                time.sleep(5)
-
-        finally:
-            if driver:
-                driver.quit()
-
-            if display:
-                display.stop()
-
-            db.session.commit()
-
-    def process_data(self, fund, driver):
-        fund.parse_market_data(driver)
-        return True
 
 class HistoricalExtract(DailyExtract):
     def process_data(self, fund, driver):

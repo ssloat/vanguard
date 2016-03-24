@@ -5,6 +5,8 @@ import time
 import os
 import logging
 
+from bs4 import BeautifulSoup
+
 from selenium.webdriver.common.by import By
 import selenium.common.exceptions
 
@@ -78,23 +80,20 @@ class VanguardFund(db.Model):
     def market_data_url(self):
         return "https://advisors.vanguard.com/VGApp/iip/site/advisor/investments/price?fundId=%04d" % self.id
 
-    def parse_market_data(self, driver):
+    def parse_market_data(self, http):
         logger.info('parse_market_data: %s' % self.market_data_url)
 
-        prices_table, dividends_table = _web_lookup(
-            self.market_data_url, 
-            driver, 
-            '//table[@id="priceForm:historicalPricesTable"]',
-            '//table[@id="priceForm:priceDistributionsTable"]',
-        )
+        r = http.urlopen('GET', self.market_data_url)
+        soup = BeautifulSoup(r.data, 'html5lib')
 
-        trs = prices_table.find_elements_by_xpath('tbody/tr')
-        for tr in trs[1:]:
-            self.add_price([x.text for x in tr.find_elements_by_xpath('td')])
+        prices_table = soup.find(id='priceForm:historicalPricesTable')
+        for row in prices_table.find_all('tr')[1:]:
+            self.add_price([x.text for x in row.find_all('td')])
 
-        trs = dividends_table.find_elements(By.TAG_NAME, 'tr')
+        dividends_table = soup.find(id='priceForm:priceDistributionsTable')
+        trs = dividends_table.find_all('tr')
         for tr in trs[1:]:
-            self.add_dividend([x.text for x in tr.find_elements(By.TAG_NAME, 'td')])
+            self.add_dividend([x.text for x in tr.find_all('td')])
 
     def add_dividend(self, data):
         try:
